@@ -13,7 +13,7 @@ function Category() {
 
   useEffect(() => {
     // Fetch category data from the backend API
-    fetch("http://localhost:3001/get/category")
+    fetch("https://the-salt-legal-backend-1.onrender.com/get/category")
       .then((response) => response.json())
       .then((data) => {
         console.log("Response data:", data); // Log the response data

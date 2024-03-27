@@ -1,3 +1,6 @@
+
+
+
 import React, { useState, useEffect } from "react";
 import "./Document.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,8 +17,13 @@ function Document() {
     setExpandedCategory(expandedCategory === index ? null : index);
   };
 
+  const handleRedirect = (url) => {
+    window.open(url, "_blank"); // Open the URL in a new tab
+  };
+
+
   useEffect(() => {
-    fetch("http://localhost:3001/get/category")
+    fetch("https://the-salt-legal-backend-1.onrender.com/get/category")
       .then((response) => response.json())
       .then((data) => {
         console.log("Response data:", data); 
@@ -54,15 +62,23 @@ function Document() {
               alt="icon"
             />
             <h4>{item.title}</h4>
-            <FontAwesomeIcon 
-              icon={faChevronDown} 
-              size="xs" 
-              className="chevron-icon" 
+            <div
+              className="chevron-icon"
               onClick={() => toggleCategory(index)}
-            />
+            >
+              <FontAwesomeIcon 
+                icon={faChevronDown} 
+                size="xs" 
+              />
+            </div>
             {expandedCategory === index && (
               <div className="dropdown-options">
-                {/* Render your dropdown options here */}
+                {/* Render subcategories here */}
+                {item.subCategories.map((subcategory, subIndex) => (
+                  <div key={subIndex} className="subcategory" onClick={() => handleRedirect('https://www.indiabudget.gov.in/doc/bh1.pdf')}>
+                    {subcategory.subCategory}
+                  </div>
+                ))}
               </div>
             )}
           </div>
