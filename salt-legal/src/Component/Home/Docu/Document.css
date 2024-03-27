@@ -74,18 +74,19 @@
 }
 
 .dropdown-options {
- 
-  margin-top: 20px;
-  left: 0 !important;
-  /* display: block; */
-  margin-top: 10px;
-  /* padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px; */
+  /* position: relative; */
+  top: calc(100% + 10px); /* Adjust the distance from the top */
+  left: 50%; /* Position it centered horizontally */
+  transform: translateX(-50%); /* Center horizontally */
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   z-index: 1;
-  width: 100px;
+  width: 400px; 
+  display: none; 
+}
+
+.card:hover .dropdown-options {
+  display: block; /* Show when parent card is hovered */
 }
