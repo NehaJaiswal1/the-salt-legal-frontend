@@ -1,30 +1,47 @@
-import React from "react";
-import { topDocument } from "../../../Data/data";
+import React, { useState, useEffect } from "react";
 import "./Document.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import com from '../../../assets/image/com.png';
-import { faChevronCircleDown, faChevronDown, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom"; 
 
 function Document() {
+  const navigate = useNavigate(); 
+  const [categoryData, setCategoryData] = useState([]);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const toggleCategory = (index) => {
+    setExpandedCategory(expandedCategory === index ? null : index);
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:3001/get/category")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Response data:", data); 
+        setCategoryData(data.data); 
+      })
+      .catch((error) => {
+        console.error("Error fetching category data:", error);
+      });
+  }, []);
 
   const handleBrowseMore = () => {
-    navigate('/register'); // Navigate to the "/register" route
+    navigate('/register'); 
   };
+
   return (
     <div className="card-container1">
       <div className="card-container">
-      <div>
-        <h3>
-          Whatever Business <span>or </span>Legal Document You Need,
-          <span> We Have a Template </span> for You.
-        </h3>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo inventore quos officiis, natus nostrum,  </p>
+        <div>
+          <h3>
+            Whatever Business <span>or </span>Legal Document You Need,
+            <span> We Have a Template </span> for You.
+          </h3>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo inventore quos officiis, natus nostrum,  </p>
         </div>
-        {topDocument.map((document) => (
-          <div key={document._id} className="card">
+        {categoryData.slice(0, 24).map((item, index) => (
+          <div key={index} className="card">
             <img
               src={com}
               style={{
@@ -34,13 +51,22 @@ function Document() {
                 width:'35px',
                 marginLeft: "20px",
               }}
+              alt="icon"
             />
-
-<h4>{document.name}</h4>
-            <FontAwesomeIcon icon={faChevronDown} size="xs" className="chevron-icon" />
+            <h4>{item.title}</h4>
+            <FontAwesomeIcon 
+              icon={faChevronDown} 
+              size="xs" 
+              className="chevron-icon" 
+              onClick={() => toggleCategory(index)}
+            />
+            {expandedCategory === index && (
+              <div className="dropdown-options">
+                {/* Render your dropdown options here */}
+              </div>
+            )}
           </div>
         ))}
-        
       </div>
       <div className="center-button">
         <button onClick={handleBrowseMore}>BROWSE MORE</button> 

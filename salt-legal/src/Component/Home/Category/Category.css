@@ -10,7 +10,9 @@
 }
 
 
-
+.card-style:hover {
+  cursor: pointer;
+}
 .card-style {
   display: flex;
   flex-direction: column;
