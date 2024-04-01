@@ -15,7 +15,7 @@
 }
  */
 .card {
-  width: 20%; /* To show 4 cards in a row */
+  width: 20%; 
   height: 50px;
   margin: 10px;
   padding: 10px;
@@ -74,19 +74,78 @@
 }
 
 .dropdown-options {
-  /* position: relative; */
-  top: calc(100% + 10px); /* Adjust the distance from the top */
-  left: 50%; /* Position it centered horizontally */
-  transform: translateX(-50%); /* Center horizontally */
+ 
+  top: calc(100% + 10px); 
+  left: 50%; 
+  transform: translateX(-50%); 
+  /* background-color: white; */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1;
+  display: none; 
+  background-color: #f1f5f9;
+}
+
+
+/* .dropdown-options {
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   z-index: 1;
-  width: 400px; 
-  display: none; 
+  width: 2000px; 
+  height: auto;
+  display: none;
+} */
+
+.drop-down-div-fa{
+  margin-right: auto;
+  width: auto;
+  text-align: right;
+ 
+}
+
+.drop-down-fa-icon{
+    background-color: #dacad2;
+    border-radius: 50%;
+    color: #d63384;
+    padding: 10px;
+  
 }
 
 .card:hover .dropdown-options {
-  display: block; /* Show when parent card is hovered */
+  display: block; 
+}
+
+.subcategory-div {
+  margin-left: 20px;
+  padding: 8px;
+  padding-left: 20px;
+  position: relative;
+  width: 18rem !important ; 
+  
+
+}
+
+.subcategory-div:hover{
+  color: #d63384;
+  
+ 
+}
+
+.subcategory-div::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px; 
+  height: 8px; 
+  background-color:white;
+  border-radius: 50%;
+  border: 1px solid #d63384;
 }

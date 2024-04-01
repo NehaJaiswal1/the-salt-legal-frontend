@@ -2,10 +2,57 @@
 
 import React from 'react';
 import './Package.css'
+import axios from 'axios';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 
 function Package() {
+  const [book, setbook] = useState({
+    name: "The Road to be taken",
+    author:"C.S Tylor",
+    img:"https://th.bing.com/th?id=OIP.O8X2cM_d8XTou4d3_YlbgAHaLH&w=204&h=306&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+    price:500,
+  });
+  const initPayment = (data) => {
+    const options = {
+      key: "rzp_test_UH0rkDW0Rkm44R",
+      amount : data.amount,
+      currency : data.currency,
+      name : book.name,
+      description : "Test Transaction",
+      img : book.img,
+      order_id : data.id,
+      handler : async (response) => {
+        try {
+          const verifyUrl = 'https://the-salt-legal-backend.onrender.com/verify';
+          const {data} = await axios.post(verifyUrl, response);
+          console.log("verifyData",data);
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      theme:{
+        color: "#3399cc"
+      },
+    }
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  }
+
+  const handlePayment = async () => {
+    try {
+      console.log("order payment")
+      const orderUrl = 'https://the-salt-legal-backend.onrender.com/orders';
+      const {data} = await axios.post(orderUrl, {
+        amount: book.price
+      });
+      console.log("orderData",data);
+      initPayment(data.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className='pakage-container'>
        <h2>Choose a <span>Right plan</span> for you</h2>
@@ -46,8 +93,9 @@ function Package() {
         <FontAwesomeIcon icon={faCheckSquare} style={{marginRight:'15px', color:'white', marginTop:'5px'}}/><p>Ideal for small teams </p>
         </div>
        
-        <h3>US $24.99/ month</h3>
-        <button>SELECT</button>
+        <h3>US ${book.price} month</h3>
+        <button onClick={handlePayment}>SELECT</button>
+
       </div>
       <div className="package-card">
         <h2>Unlimited</h2>

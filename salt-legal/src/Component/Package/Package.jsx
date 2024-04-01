@@ -21,9 +21,9 @@ function Package() {
       <div>
         <Navbar/>
       </div>
-      <div>
-        <h2>Get Instant Access to 3,000+ Document Templates, Cloud Storage, and File Sharing to Organize, Manage and Grow Your Business.</h2>
-        <Document />
+      <div style={{marginTop:'10rem'}}>
+        {/* <h2>Get Instant Access to 3,000+ Document Templates, Cloud Storage, and File Sharing to Organize, Manage and Grow Your Business.</h2> */}
+        {/* <Document /> */}
       </div>
       <div>
         <Price />
