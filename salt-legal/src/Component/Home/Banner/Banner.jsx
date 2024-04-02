@@ -17,7 +17,7 @@ function Banner() {
   return (
     <div className="banner-container">
       <div className="banner-image">
-        {/* <div className="banner-overlay"></div> */}
+        <div className="banner-overlay"></div>
         <div className="banner-text">
           <h2>Empower your legal journey with precision and efficiency</h2>
           <p>welcome to your ultimate law toolkit</p>

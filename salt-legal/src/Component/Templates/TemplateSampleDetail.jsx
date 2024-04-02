@@ -6,6 +6,8 @@ import Navbar from "../Navbar/Navbar";
 import { useNavigate } from 'react-router-dom'; 
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import ts1 from "../../assets/template/sample.webp";
+import { useRecoilValue } from 'recoil';
+import { jwtTokenState } from '../auth/atoms';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -20,8 +22,14 @@ import Footer from '../Home/Footer/Footer'
 
 function TemplateSampleDetail() {
   const navigate = useNavigate(); 
+  const jwtToken = useRecoilValue(jwtTokenState);
   const handleDownloadClick = () => {
-    navigate('/register'); 
+    if (jwtToken) {
+      navigate('/package'); 
+    } else {
+      navigate('/login'); 
+      console.log('User not logged in. Please login to download.');
+    }
   };
 
   return (

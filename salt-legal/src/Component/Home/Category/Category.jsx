@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, CardMedia } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +76,6 @@ function Category() {
             <CardContent>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <CardMedia>
-                  {/* Use index to select the corresponding image from imageUrls */}
                   <img src={imageUrls[index]} style={{ width: "100px" }} alt={item.title} />
                 </CardMedia>
                 <div className="card-style-1">

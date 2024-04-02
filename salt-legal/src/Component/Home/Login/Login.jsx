@@ -3,10 +3,10 @@
 
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import "./Login.css";
 import {
-    Card,CardContent,
+  Card, CardContent,
   Typography,
   Box,
   FormControl,
@@ -25,19 +25,26 @@ import {
   faLinkedinIn,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { useRecoilState } from 'recoil';
+import { jwtTokenState, userIdState } from "../../auth/atoms";
 // import Visibility from "@mui/icons-material/Visibility";
 // import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Login() {
 
   
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("");
-
+  const [jwtToken, setJwtToken] = useRecoilState(jwtTokenState);
+  const [userId, setUserId] = useRecoilState(userIdState);
   // useEffect(() => {
   //   // Load saved email and password from localStorage when component mounts
   //   const savedEmail = localStorage.getItem("savedEmail");
@@ -58,31 +65,36 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await fetch
-      ("https://the-salt-legal-backend-1.onrender.com/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-  
-      const responseData = await response.json();
-  
-      if (response.ok) {
-        // Login successful, you can handle the success here
-        console.log("Login successful", responseData);
-        // auth.saveAuthData({ token: token, emailId: email, userId: userId  });
-        // const token = responseData.data.token;
-        // const email = responseData.data.email;
-        // const userId = responseData.data.userId;
-        // auth.saveAuthData({ token: token, email: email, userId: userId });
+        ("https://the-salt-legal-backend.onrender.com/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
 
-        setSuccessMessage("Login successfull.");
-        
+      const responseData = await response.json();
+
+      if (response.ok) {
+       
+        console.log("Login successful", responseData);
+        const token = responseData.data.token;
+        const email = responseData.data.email;
+        const userId = responseData.data.userId;
+        console.log("LoggedIn successfully", token, userId);
+
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('userId', userId);
+
+        setJwtToken(token);
+        setUserId(userId);
+        setSuccessMessage("Logged successfully");
+
         setEmail("");
         setPassword("");
         setMessage("");
-      
+        navigate('/')
 
       } else {
         // Login failed, log the error details
@@ -94,8 +106,8 @@ function Login() {
       setMessage("An unexpected error has occurred.");
     }
   };
-  
-  
+
+
   return (
     <div className="section-div">
       <Card
@@ -124,13 +136,13 @@ function Login() {
                 fontSize: "18px",
                 fontWeight: "bold",
                 textAlign: "center",
-               
+
               }}
             >
               Log In with Us
             </Typography>
             {message && <Typography variant="body1" color="error">{message}</Typography>}
-            {successMessage && <Typography variant="body2" style={{ color: 'green', textAlign:'center' }}>{successMessage}</Typography>}
+            {successMessage && <Typography variant="body2" style={{ color: 'green', textAlign: 'center' }}>{successMessage}</Typography>}
             <FormControl sx={{ m: 1, width: "35ch" }} variant="standard">
               <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
               <Input
@@ -138,7 +150,7 @@ function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-               
+
               />
             </FormControl>
             <FormControl sx={{ m: 1, width: "35ch" }} variant="standard">
@@ -148,17 +160,17 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                // endAdornment={
-                //   <InputAdornment position="end">
-                //     <IconButton
-                //       aria-label="toggle password visibility"
-                //       onClick={handleClickShowPassword}
-                //       onMouseDown={handleMouseDownPassword}
-                //     >
-                    
-                //     </IconButton>
-                //   </InputAdornment>
-                // }
+              // endAdornment={
+              //   <InputAdornment position="end">
+              //     <IconButton
+              //       aria-label="toggle password visibility"
+              //       onClick={handleClickShowPassword}
+              //       onMouseDown={handleMouseDownPassword}
+              //     >
+
+              //     </IconButton>
+              //   </InputAdornment>
+              // }
               />
             </FormControl>
             {/* <Checkbox
@@ -168,11 +180,11 @@ function Login() {
             Remember me
             <br /> */}
 
-             <Link to="/forgotpassword" className="div-p">
+            <Link to="/forgotpassword" className="div-p">
               Forgot your password?
             </Link>
             <div className="div-button">
-            <Button
+              <Button
                 variant="contained"
                 sx={{ justifyContent: "center", m: 1 }}
                 onClick={handleLogin}
@@ -180,7 +192,7 @@ function Login() {
                 LogIn
               </Button>
             </div>
-          
+
             {/* <Button variant="contained" sx={{justifyContent:'center', m: 1, borderRadius:'100%'}}></Button>
              */}
             <Link to='/register' className="div-p1" >Don't have account? Register Here</Link>

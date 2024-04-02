@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../Navbar/Navbar';
 import Category from '../Home/Category/Category';
@@ -10,6 +10,10 @@ import './Templates.css'
 import Footer from '../Home/Footer/Footer'
 
 function Templates() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
 
   const navigate = useNavigate(); 
   const handleButtonClick = () => {
@@ -20,9 +24,9 @@ function Templates() {
       <div>
         <Navbar />
       </div>
-      <div>
+      {/* <div>
         <Category />
-      </div>
+      </div> */}
       <div>
         <TemplateSample />
       </div>

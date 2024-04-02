@@ -1,7 +1,7 @@
 
 
 import { Button, Card, CardContent, Typography } from "@mui/material";
-import React from "react";
+import React,{useEffect} from "react";
 import b1 from "../../assets/benefit1.png";
 import b2 from "../../assets/benefit2.png";
 import b3 from "../../assets/benefit3.png";
@@ -20,6 +20,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Newsletter() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
   return (
     <div>
       <div>

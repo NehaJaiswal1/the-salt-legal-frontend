@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import "./SignUp.css";
@@ -26,6 +26,11 @@ import {
 
 
 function SignUp() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,21 +47,14 @@ function SignUp() {
     event.preventDefault();
   };
 
-  useEffect(() => {
-    const hideSuccessMessage = setTimeout(() => {
-      setShowSuccessMessage(false);
-    }, 3000); // Hide the success message after 3 seconds
-
-    return () => clearTimeout(hideSuccessMessage);
-  }, [successMessage]); // Add successMessage as a dependency
-
+ 
   const handleCreateAccount = async () => {
 
     try {
      
 
       const response = await fetch(
-        "https://the-salt-legal-backend-1.onrender.com/register",
+        "https://the-salt-legal-backend.onrender.com/register",
         {
           method: "POST",
           headers: {
@@ -81,17 +79,18 @@ function SignUp() {
         setMessage("");
         
         setShowTermsMessage(false);
+        navigate('/thank-you');
       } else {
         // Register failed, log the error details and update the message
         console.error("Register failed", responseData);
         setMessage(`Registration Failed: ${responseData?.message || "An unknown error occurred."}`);
-        setAcceptOurTerms(false);
+        
         // showTermsMessage(false)
       }
     } catch (error) {
       console.error("Error during register:", error);
       setMessage("An unexpected error has occurred.");
-      setAcceptOurTerms(false);
+      
       // showTermsMessage(false)
     }
   }

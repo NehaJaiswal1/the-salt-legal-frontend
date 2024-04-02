@@ -14,7 +14,7 @@ function TemplateSample() {
     navigate('/templates/template-sample'); 
   };
   const handleButtonClick = () => {
-    navigate('/register'); 
+    navigate('/login'); 
   };
   return (
    
@@ -42,7 +42,7 @@ function TemplateSample() {
         ))}
       </div>
       <div className='template-button-div'>
-      <Button className='register-button'onClick={handleButtonClick}>Get STARTED</Button>
+      {/* <Button className='register-button'onClick={handleButtonClick}>Get STARTED</Button> */}
       </div>
       
     </div>

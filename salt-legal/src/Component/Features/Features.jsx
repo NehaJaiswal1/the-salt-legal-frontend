@@ -1,6 +1,6 @@
 
 
-import React from "react";
+import React,{useEffect} from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Home/Footer/Footer";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
@@ -12,6 +12,10 @@ import Testimonial from "../Home/testimonial/testimonial";
 import tsl from '../../assets/tsl-logo.png'
 
 function Features() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
   return (
     <div>
       <div>

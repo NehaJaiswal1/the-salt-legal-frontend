@@ -7,8 +7,12 @@ import React from 'react';
 import { Typography, Button, Container, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import './Thankyou.css';
+import { useRecoilValue } from 'recoil';
+import { jwtTokenState, userIdState } from '../../auth/atoms';
 
 function Thankyou() {
+  const jwtToken = useRecoilValue(jwtTokenState);
+  const userId = useRecoilValue(userIdState);
   return (
     <div className="thankyou-page">
       <Container>

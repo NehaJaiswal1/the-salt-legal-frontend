@@ -6,14 +6,18 @@ import { faChevronDown, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import com from '../../../assets/image/com.png';
 import './Document.css';
+import { useRecoilValue } from 'recoil';
+import { jwtTokenState } from '../../auth/atoms';
 
 
 
 function Document() {
+  
   const navigate = useNavigate();
+  const jwtToken = useRecoilValue(jwtTokenState);
   const [categoryData, setCategoryData] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+ 
 
   const toggleCategory = (index) => {
     setExpandedCategory(expandedCategory === index ? null : index);
@@ -24,7 +28,13 @@ function Document() {
   };
 
   const handleDownload=()=>{
-    navigate('/package')
+    if (jwtToken) {
+      navigate('/package'); 
+    } else {
+      navigate('/login'); 
+      console.log('User not logged in. Please login to download.');
+    }
+    // navigate('/package')
   }
 
   useEffect(() => {
@@ -46,7 +56,13 @@ function Document() {
   }, []);
 
   const handleBrowseMore = () => {
-    navigate('/register');
+    if (jwtToken) {
+      navigate('/templates'); 
+    } else {
+      navigate('/login'); 
+      console.log('User not logged in. Please login to download.');
+    }
+    
   };
 
   return (

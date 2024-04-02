@@ -64,24 +64,24 @@ export default function ContactUs() {
       <div className="flex  p-4">
         {/* Left Side - Buttons */}
         <div className="w-full md:w-1/3 p-4 ">
-        <button
+        {/* <button
             className={`${buttonColor}
              text-white px-4 py-2 mb-2 w-full rounded-lg`}
            
           >
             Search Category
-          </button>
-          <button className={`${buttonColor}
+          </button> */}
+          {/* <button className={`${buttonColor}
              text-white px-4 py-2 mb-2 w-full rounded-lg`}
              >
             Get Templates
-          </button>
-          <button className={`${buttonColor}
+          </button> */}
+          {/* <button className={`${buttonColor}
              text-white px-4 py-2 mb-2 w-full rounded-lg`}
             >
             Create New Account
-          </button>
-          <div className="bg-white p-4 rounded-lg shadow-lg">
+          </button> */}
+          <div className=" p-4 rounded-lg shadow-inner shadow-pink-100">
             <h2 className="text-xl font-bold mb-4">Contact Details</h2>
             <div className="flex items-center mb-2">
               <FontAwesomeIcon icon={faPhone} className="text-gray-500 mr-2" />
@@ -167,10 +167,10 @@ export default function ContactUs() {
 
             <button
               type="submit"
-              className="bg-blue-900 
+              className="
                text-white px-4 py-2 rounded-lg font-bold focus:outline-none focus:shadow-outline"
             >
-              Send Message
+              Send 
             </button>
            
           </form>
