@@ -60,6 +60,9 @@ function Package() {
         });
         console.log("orderData", data);
         initPayment(data.data);
+        if (data.data.status === "created") {
+          navigate('/category-pay');
+        } 
       }
       else {
         navigate('/login');
@@ -69,6 +72,8 @@ function Package() {
       console.log(error)
     }
   }
+
+  
   return (
     <div className='pakage-container'>
       <h2>Choose a <span>Right plan</span> for you</h2>
@@ -92,7 +97,7 @@ function Package() {
             <FontAwesomeIcon icon={faCheckSquare} style={{ marginRight: '15px', color: 'black', marginTop: '5px' }} /><p>20 GB cloud storage Templates</p>
           </div>
           <h3>US $10 / month</h3>
-          <button>SELECT</button>
+          <button onClick={handlePayment}>SELECT</button>
         </div>
         <div className=" package-card-2">
           <h2>5 Users</h2>
@@ -129,7 +134,7 @@ function Package() {
 
           </div>
           <h3>US $30 / month</h3>
-          <button>FULL ACCESS</button>
+          <button onClick={handlePayment}>FULL ACCESS</button>
         </div>
       </div>
     </div>

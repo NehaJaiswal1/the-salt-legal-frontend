@@ -94,7 +94,7 @@ function Login() {
         setEmail("");
         setPassword("");
         setMessage("");
-        navigate('/')
+        navigate('/package')
 
       } else {
         // Login failed, log the error details

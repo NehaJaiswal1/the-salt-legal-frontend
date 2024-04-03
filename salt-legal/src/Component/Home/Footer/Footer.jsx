@@ -1,5 +1,6 @@
 
 // Footer.js
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,21 +21,25 @@ const Footer = () => {
             <div class="footer-section">
                 <h2 class="footer-heading">USEFUL LINKS</h2>
                 <ul class="footer-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/aboutus">About Us</a></li>
-                    <li><a href="/">Templates</a></li>
-                    <li><a href="/">Pricing</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/">Home</a></li>
+                    <li><a href="/feature">Features</a></li>
+                    <li><a href="/package">Packages</a></li>
+                    <li><a href="/templates">Templates</a></li>
+                    <li><a href="/newsletter">Newsletters</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact-us">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3 class="footer-heading">CONNECT WITH US</h3>
                 <ul class="footer-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">About Us</a></li>
-                    <li><a href="/">Templates</a></li>
-                    <li><a href="/">Pricing</a></li>
-                    <li><a href="/">Contact Us</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    <li><a href="/package">Packages</a></li>
+                    <li><a href="/templates">Templates</a></li>
+                    <li><a href="/newsletter">Newsletters</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact-us">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">

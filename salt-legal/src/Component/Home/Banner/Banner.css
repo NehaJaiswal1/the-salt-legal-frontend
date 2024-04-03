@@ -1,3 +1,4 @@
+
 .banner-container {
   position: relative;
 }
@@ -48,7 +49,7 @@
 
 .banner-text p {
   font-size: 1.7rem;
-  color: #D0A144;
+  color: #d63384;
 }
 
 
@@ -102,7 +103,7 @@ input:focus {
   border-radius: 20px !important;
   /* margin-left: 1rem; */
   margin-right: 1rem;
-  background-color: #02244a !important;
+  /* background-color: #d63384 !important; */
   color: white;
   margin-left: auto;
   margin-top: 5px;
@@ -132,7 +133,7 @@ input:focus {
   width: 900px;
   border: 1px solid #D0A144;
   border-radius: 20px;
-  background-color: #02244a;
+  /* background-color: #02244a; */
 
 }
 

@@ -19,6 +19,7 @@ import ResetPassword from './Component/Home/ForgetPassword/ResetPassword';
 import VerifyOTP from './Component/Home/ForgetPassword/VerifyOTP';
 import ErrorPage from './Component/NotFound/404NotFound';
 import ThankYou from './Component/Home/ThankYou/Thankyou';
+import CategoryPay from './Component/CategoryPay/CategoryPay';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route exact path="/about" element={<About/>} />
             <Route exact path="/thank-you" element={<ThankYou/>} />
             <Route exact path="/package" element={<Package/>} />
+            <Route exact path="/category-pay" element={<CategoryPay/>} />
             <Route exact path="/feature" element={<Features/>} />
             <Route exact path="/newsletter" element={<Newsletter />} />
             <Route exact path="/templates/template-sample" 

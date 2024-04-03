@@ -1,25 +1,30 @@
 
 
+
+
+
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate,useLocation } from 'react-router-dom';
-import com from '../../../assets/image/com.png';
-import './Document.css';
+import com from '../../assets/image/com.png';
+import '../Home/Docu/Document.css';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { initializeApp } from 'firebase/app';
 import { useRecoilValue } from 'recoil';
-import { jwtTokenState } from '../../auth/atoms';
+import { jwtTokenState } from '../auth/atoms';
 
 
 
-function Document() {
+function CategoryPay() {
 
   const navigate = useNavigate();
   const jwtToken = useRecoilValue(jwtTokenState);
   const [categoryData, setCategoryData] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [fileUrl, setFileUrl] = useState([]);
-  const cameFromPackagesPage = location.state && location.state.from === '/packages';
+  const [selectedFolder, setSelectedFolder] = useState(null);
+  
 
   const firebaseConfig = {
     apiKey: "AIzaSyDVoCPjnHeVwhXGS6e2TecybfRA5kO47BM",
@@ -31,7 +36,9 @@ function Document() {
     measurementId: "G-R45S0BBB9B"
   };
 
-  const storage = getStorage();
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
 
   useEffect(() => {
     fetchUploadedImages();
@@ -46,30 +53,36 @@ function Document() {
     window.open(url, '_blank');
   };
 
-  const handleDownload = () => {
-    if (jwtToken) {
-      if (cameFromPackagesPage) 
-      { 
-        downloadFiles();
-      } else {
-        navigate('/package');
-      }
-    } else {
-      navigate('/login');
-      console.log('User not logged in. Please login to download.');
-    }
-  }
-  
+//   const handleDownload = () => {
+//         downloadFiles();
+//   }
 
-  // const handleDownload = () => {
-  //   if (jwtToken) {
-  //     navigate('/package');
-  //   } else {
-  //     navigate('/login');
-  //     console.log('User not logged in. Please login to download.');
-  //   }
-  //   // navigate('/package')
-  // }
+  const handleDownload = async () => {
+    if (selectedFolder !== null) {
+      try {
+        const folder = categoryData[selectedFolder];
+        const downloadURLs = await Promise.all(
+          folder.subDocuments.map(async (fileName) => {
+            const fileRef = ref(storage, `SubCategories/${folder.folderName}/${fileName}`);
+            return await getDownloadURL(fileRef);
+          })
+        );
+        
+        downloadURLs.forEach((url, index) => {
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `file${index}`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      } catch (error) {
+        console.error('Error downloading files:', error);
+      }
+    }
+  };
+
+  
 
 
   const fetchUploadedImages = async () => {
@@ -79,7 +92,6 @@ function Document() {
 
       const folderNames = subCategoryItems.prefixes.map((folderRef) => folderRef.name);
 
-
       const categoryPromises = folderNames.map(async (folderName) => {
         const folderRef = ref(storage, `SubCategories/${folderName}`);
         const folderItems = await listAll(folderRef);
@@ -87,8 +99,6 @@ function Document() {
       });
 
       const categoryData = await Promise.all(categoryPromises);
-
-      console.log('Category Data:', categoryData);
 
       setCategoryData(categoryData);
     } catch (error) {
@@ -149,18 +159,7 @@ function Document() {
   };
   
 
-  const handleBrowseMore = () => {
-    if (jwtToken) {
-      navigate('/templates');
-    } else {
-      navigate('/login');
-      console.log('User not logged in. Please login to download.');
-    }
-
-  };
-
   
-
   return (
     <div className="card-container1">
       <div className="card-container">
@@ -175,10 +174,12 @@ function Document() {
           <div key={index} className="card">
             <img src={com} style={{ marginRight: '20px', alignText: 'center', color: '#02244a', width: '35px', marginLeft: '20px' }} alt="icon" />
             <h4>{item.folderName}</h4>
-            <div className="chevron-icon" onClick={() => toggleCategory(index)}>
+            <div className="chevron-icon" onClick={() => {
+              toggleCategory(index);
+              setSelectedFolder(expandedCategory === index ? null : index);
+            }}>
               <FontAwesomeIcon icon={faChevronDown} size="xs" />
             </div>
-
 
             {expandedCategory === index && (
               <div className="dropdown-options">
@@ -196,12 +197,8 @@ function Document() {
           </div>
         ))}
       </div>
-      <div className="center-button">
-        <button onClick={handleBrowseMore}>BROWSE MORE</button>
-      </div>
-
     </div>
   );
 }
 
-export default Document;
+export default CategoryPay;
